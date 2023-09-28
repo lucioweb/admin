@@ -359,7 +359,7 @@ Crie uma seed para se criar o primeiro administrador com o comando:
 
     $ npx knex seed:make create_initial_employees
 
-O arquivo criado estará na pasta "seeds" na aplicação, com o nome "create_initial_employees.js". Edite o arquivo e salve-o com o seguinte conteúdo:
+O arquivo criado estará na pasta "seeds" (lembre-se que "seed" foi o nome definido para o diretório do projeto que abrigaria as seeds criadas?) da aplicação, com o nome "create_initial_employees.js". Edite o arquivo e salve-o com o seguinte conteúdo:
 
     /**
     * @param { import("knex").Knex } knex
@@ -407,6 +407,6 @@ SEED PARA A TABELA `create_initial_categories`:
       ]);
     };
 
-EXECUTANDO A SEED
+EXECUTANDO UMA SEED ESPECÍFICA
 
     $ npx knex seed:run --specific=create_initial_categories.js
