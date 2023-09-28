@@ -340,6 +340,16 @@ Antes de iniciar, vamos precisar de uma biblioteca para tratar com criptografia 
 
     $ npm install bcrypt
 
+Cookies são uma tecnologia já bem conhecida na web, mas se utilizado de forma correta é super seguro e prático de usar.
+
+Usaremos a biblioteca (middleware) "cookie-session" do Express para, quando o usuário estiver logado no sistema, um cookie seguro e criptografado ser armazenado no seu navegador. Esse cookie é sempre enviado ao servidor a cada nova requisição do navegador, então poderemos verificar se o usuário que está acessando uma determinada rota está ou não com uma sessão ativa (logado) e qual é o seu ID.
+
+    $ npm install cookie-session
+
+Antes de escrever as rotas de produtos precisamos de uma biblioteca que gerencie upload de arquivos no sistema. Vamos usar o "multer" pra isso. Instalando na aplicação:
+
+    $ npm install multer
+
 #### 1 - CRIANDO `seeds`:
 Vamos inicialmente criar alguns usuários na tabela "employees" no banco de dados. Para isso vamos utilizar o recurso chamado de "seeds" do knex.
 
