@@ -1,0 +1,48 @@
+GET http://localhost:8080/
+{
+    "token": "Flávio"    
+}
+###
+
+GET http://localhost:8080/aluno
+
+###
+
+GET http://localhost:8080/aluno/425ff2ad-d097-46ee-b0ba-071c4abbd37f
+
+###
+
+POST http://localhost:3000/api/auth/employees/registration
+Content-type: application/json
+
+{
+    "name": "Flávio",
+    "email":"flavio@flavio",
+    "password": "123456"   
+}
+
+###
+
+POST http://localhost:3000/api/auth/employee/sign_in
+Content-type: application/json
+
+{
+    "email":"lucio@lucio.com",
+    "password": "lucio"   
+}
+
+###
+
+PUT http://localhost:8080/aluno?id=155a45f9-8e28-4240-977c-d6bc77baaf72
+Content-type: application/json
+
+{
+    "nom_aluno": "Lúcio Flávio Lemos",
+    "endereco_aluno":"Rua Alexandrino de Alencar 1592",
+    "RG": "1010297644/MD"
+   
+}
+
+### 
+
+DELETE http://localhost:8080/aluno?id=425ff2ad-d097-46ee-b0ba-071c4abbd37f
