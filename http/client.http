@@ -1,0 +1,43 @@
+GET https://localhost:3000/api/clients
+Authorization: "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZSI6eyJpZCI6MSwibmFtZSI6IkzDumNpbyIsImVtYWlsIjoibHVjaW9AbHVjaW8uY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkOC4uYXAxWUVWQVZkZEV6NTVPYVM4LmFRNzdvVS5kQ2ozZWFHbDR2ekpsUDl3Nkh6L0xuSW0iLCJpc19hZG1pbiI6MX0sImlhdCI6MTY5NjAyMDMxMywiZXhwIjoxNjk2MTkzMTEzfQ.WcXxa4Pt4Lg0kfgo-m1FZ6fXzyzKYR9Jus7paObVQ2I"
+
+ 
+   
+   
+
+###
+
+POST http://localhost:3000/api/auth/client/registration
+Content-type: application/json
+
+{
+    "name": "silvanalemos",
+    "email":"silvanalemos@luciolemos",
+    "password": "silvanalemos"   
+}
+
+###
+
+POST http://localhost:3000/api/auth/client/sign_in
+Content-type: application/json
+
+{
+    "email":"flavio@flavio",
+    "password": "123456"   
+}
+
+###
+
+PUT http://localhost:3000/api/auth/client?id=155a45f9-8e28-4240-977c-d6bc77baaf72
+Content-type: application/json
+
+{
+    "name": "Flávio",
+    "email":"flavio@flavio",
+    "password": "123456"  
+   
+}
+
+### 
+
+DELETE http://localhost:8080/aluno?id=425ff2ad-d097-46ee-b0ba-071c4abbd37f
