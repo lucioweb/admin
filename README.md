@@ -16,7 +16,7 @@ Tecnologias do módulo administrativo:
 
 O sistema administrativo conterá inicialmente as funcionalidades mais importantes, podendo ser escalado.
 
-### 1ª PARTE - MIGRATIONS
+### PARTE 1 - CRIAÇÃO E CONFIGURAÇÃO INICIAL DO PROJETO
   
 #### 1 - CRIAÇÃO DA PASTA QUE ABRIGARÁ TODO O PROJETO
     $ mkdir pettopstore
@@ -90,9 +90,14 @@ O comando acima criará um aplicativo do Express com suporte a `ejs` chamado `ad
 ##### [Knex JS](https://knexjs.org/guide/#node-js) e mysql em um só comando    
     $ npm install knex mysql
 O knex.js é definido como um "query builder", ou seja, um construtor de consultas para o banco de dados ao qual ele se conecta. Foi pensado para ser flexível e simples de usar, fornecendo um conjunto de funcionalidades básicas para a realização de qualquer tipo de operação que se deseje realizar em um banco de dados. Note que estamos instalando o driver mysql com o knex, que suporta tanto o banco de dados MySQL como o MariaDB.
-#### 8 - CRIAÇÃO DO BANCO DE DADOS DA APLICAÇÃO:
+
+### PARTE 2 - CRIAÇÃO DO BANCO DE DADOS DA APLICAÇÃO:
+
+#### - 1 - CRIE A BASE DE DADOS DA APLICAÇÃO COM A QUERY:
+
      mysql> CREATE DATABASE pettopstore; 
 
+#### - 2 TABELAS QUE SERÃO IMPLEMENTADAS NA BASE DE DADOS VIA MIGRATIONS
 As tabelas que serão implementadas na base de dados `pettopstore` são:
 * employees
 * clients
@@ -113,7 +118,9 @@ A tabela `sales` tem as vendas realizadas no site ou na loja física. Ela guarda
 
 A tabela `items` relacionará `products` e `sales` (N-N) e armazenará dois ids (sale_id e product_id) e com ela conseguiremos saber que produtos compôem cada venda.
 
-#### 9 - CRIAÇÃO E CONFIGURAÇÃO DO ARQUIVO DE CONEXÃO DA APLICAÇÃO COM O BANCO DE DADOS:
+### PARTE 3 - CRIAÇÃO E CONFIGURAÇÃO DO ARQUIVO DE CONEXÃO DA APLICAÇÃO COM O BANCO DE DADOS
+
+#### O ARQUIVO DE CONEXÃO
 Criando na estrutura do projeto o arquivo com as [diretivas de conexão com o banco de dados](https://knexjs.org/guide/#configuration-options) da aplicação chamado `knexfile.js`, com o seguinte conteúdo.
 
     module.exports = {
@@ -138,7 +145,9 @@ Criando na estrutura do projeto o arquivo com as [diretivas de conexão com o ba
 
 Tenha em mente que você já deverá ter um SGBD instalado em seu computador (client); um banco de dados criado (database) e um usuário (user e password) com privilégios no banco de dados (GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost', FLUSH PRIVILEGIES, etc).
 
-#### 10 - CRIANDO A `migration` de nome `employees`:
+### PARTE 4 - CRIANDO `migrations`:
+
+#### 1 - CRIANDO A `migration` de nome `employees`:
 Agora vamos testar a configuração do `knexfile.js`, criando tabelas no banco de dados da aplicação, utilizando `migrations`, um recurso de linha de comando presente também no `knex.js`.
 
 Migrations (no caso do Knex) são arquivos Javascript criados por uma ferramenta de linha de comando do knex chamada `knex cli` que tem por objetivo organizar de forma sequencial as alterações no esquema do banco de dados, como a criação e a exclusão de tabelas, alteração de colunas, remoção de colunas, etc.
@@ -149,7 +158,7 @@ Para criar a migration `employees` execute a seguinte linha de comando:
 
 Esse comando criará uma pasta de nome `migrations`, na estrutura de arquivos do projeto e dentro dela a migração de nome `20230927015523_create_employees.js` com as instruções necessárias à criação da tabela `employees`.
 
-#### 11 - `UP` E `DOWN`:
+#### 2 - `UP` e `DOWN`:
 Migrations podem ser executadas para cima "up" ou para baixo "down", (aplica/desfaz) mudanças no banco de dados, por isso a necessidade de duas funções que devem ser implementadas.
 
 O arquivo de migração é um conjunto de duas funções, uma chamada "up" e uma chamada "down" que vem vazias e você deve preencher com os comandos que desejar, como visto abaixo:
@@ -186,14 +195,14 @@ Repare que na função "up" usamos o comando `knex.schema.createTable`, que rece
 
 Existem outros métodos para a manipulação do esquema do banco de dados que podem ser conferidos na documentação do knex.
 
-#### 12 - EXECUTANDO A `migration` CRIADA:
+#### 3 - EXECUTANDO A `migration` CRIADA:
 Até aqui, apenas criamos a `migration`. Para executá-la devemos rodar no terminal o seguinte comando:
 
     $ npx knex migrate:up
 
 Isso fará com que o método "up" da próxima migração ainda não executada seja rodado. Como no nosso caso só temos uma, ela será a  `migration` executada. Repare que se você rodar esse comando mais de uma vez, a migração não executará novamente pois o knex guarda a informação de quais migrações foram criadas.
 
-#### 13 - CRIANDO AS DEMAIS `migrations`:
+#### 4 - CRIANDO AS DEMAIS `migrations`:
   
     $ npx knex migrate:make create_clients
     $ npx knex migrate:make create_categories
@@ -335,11 +344,11 @@ Antes de executá-las será necessário implementar em cada uma das `migrations`
     };
 </details>
 
-#### 14 - RODANDO TODAS AS `migrations` CRIADAS:
+#### 5 - RODANDO TODAS AS `migrations` CRIADAS:
 
     $ npx knex migrate:latest
 
-### 2ª PARTE - SEEDS
+### PARTE 4 - SEEDS
 Antes de iniciar, vamos precisar de uma biblioteca para tratar com criptografia de senhas chamada [bcrypt](https://www.npmjs.com/package/bcrypt). Para instalá-la no projeto admin execute:
 
     $ npm install bcrypt
@@ -387,6 +396,7 @@ Repare que o arquivo create_initial_employees.js realiza as ações:
 * Depois, para a mesma tabela, adiciona 2 employees, um com is_admin = true (Maria) e outro com is_admin = false (João). Note que nesse sistema administrativo não será possível logar como João, pois ele não é administrador.
 * Os employees são criados com a senha criptografada usando o comando `bcrypt.hashSync(senha_do_employee, 10)`, que recebe uma senha e retorna uma hash (versão critografada) dela que pode ser armazenada no banco de dados com segurança. Esse número 10, no segundo parâmetro do hashSync serve como configuração do método de criptografia, algo interno do bcrypt.
 
+#### 2 - RODANDO A SEED
 Para rodar o seed execute no terminal:
 
     $ npx knex seed:run
