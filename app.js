@@ -15,8 +15,9 @@ var indexRouter = require('./routes/index');
 
 // importando rotas de autenticação
 var authRouter = require('./routes/auth');
-var productsRouter = require('./routes/produtos');
 
+// importando rotas da api
+var apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -40,13 +41,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
 
+// usando rotas da API
+app.use('/api', apiRouter);
+
+// usando rotas de autenticação
 app.use('/auth', authRouter);
-app.use('/', [requireAuth], indexRouter);
 
-app.use('/products', productsRouter);
-//router.use('/products', productsRouter);
+// aplica o requireAuth middleware na raiz do site
+app.use('/', [requireAuth], indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

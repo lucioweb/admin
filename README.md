@@ -1,18 +1,22 @@
 ## INTRODUÇÃO 
-### Apresentação do sistema administrativo que será utilizado como base para a criação da loja virtual chamada `PetTopStore`.
-O projeto será modular, com plataformas e tecnologias diferentes para cada módulo da aplicação e terá as seguintes funcionalidades:
+### Apresentação do sistema administrativo que será utilizado como base para a criação da loja virtual `PetTopStore`.
+O projeto será modularizado, com plataformas e tecnologias diferentes para cada módulo da aplicação e que terá as seguintes funcionalidades:
 * [PAINEL DE ADMINISTRAÇÃO](https://materialpublic.imd.ufrn.br/curso/disciplina/3/77/9): onde o administrador do sistema poderá gerenciar produtos e visualizar relatórios de vendas. Também contempla uma API de acesso seguro aos dados para os outros módulos.
-* PDV: ponto de venda (loja física), onde o vendedor poderá cadastrar clientes e realizar novas vendas para ele.
+* PDV: ponto de venda (loja física), onde o vendedor poderá cadastrar clientes e realizar vendas.
 * LOJA VIRTUAL: um web site de vendas online onde os clientes poderão visualizar e adquirir os produtos da loja.
 
 Tecnologias do módulo administrativo:
-* Node.js+Express como plataforma back-end
-* MySQL como banco de dados
-* knex.js como biblioteca de acesso ao banco de dados
+* `Node JS`+`Express` no back-end;
+* `MySQL` como banco de dados;
+* `knex JS` como biblioteca de acesso ao banco de dados;
+* `bcrypt` como biblioteca para tratar a criptografia de senhas;
+* `multe` como biblioteca de gerenciamento de uploads de arquivos no sistema
+* `cookie-session` para quando o usuário estiver logado no sistema, um cookie seguro e criptografado será armazenado no seu navegador;
+* `jsonwebtoken` como estratégia de autenticação na API.
 
-O sistema administrativo conterá as funcionalidades mais importantes inicialmente, mas poderá ser incrementada à medida que o projeto avança.
+O sistema administrativo conterá inicialmente as funcionalidades mais importantes, podendo ser escalado.
 
-### 1ª PARTE
+### 1ª PARTE - MIGRATIONS
   
 #### 1 - CRIAÇÃO DA PASTA QUE ABRIGARÁ TODO O PROJETO
     $ mkdir pettopstore
@@ -23,7 +27,7 @@ O sistema administrativo da loja será a interface da aplicação onde os admini
 
     $ npx express-generator --view=ejs admin
     
-O comando acima criará um aplicativo do Express com suporte a `ejs` chamado `admin` no diretório atualmente em funcionamento, a saber, `pettopstore` que retornará a seguinte estrutura:
+O comando acima criará um aplicativo do Express com suporte a `ejs` chamado `admin` no diretório atualmente em funcionamento a saber, `pettopstore`, que retornará a seguinte estrutura:
 
     create : admin/ 
     create : admin/public/
@@ -335,7 +339,7 @@ Antes de executá-las será necessário implementar em cada uma das `migrations`
 
     $ npx knex migrate:latest
 
-### 2ª PARTE
+### 2ª PARTE - SEEDS
 Antes de iniciar, vamos precisar de uma biblioteca para tratar com criptografia de senhas chamada [bcrypt](https://www.npmjs.com/package/bcrypt). Para instalá-la no projeto admin execute:
 
     $ npm install bcrypt
@@ -410,3 +414,281 @@ SEED PARA A TABELA `create_initial_categories`:
 EXECUTANDO UMA SEED ESPECÍFICA
 
     $ npx knex seed:run --specific=create_initial_categories.js
+
+### 3ª PARTE - API
+No projeto admin, atualmente temos uma autenticação para os administradores (employees com admin=true) realizada com a estratégia cookie-session. Para a API iremos utilizar uma outra estratégia: JSON Web Tokens (JWT).
+
+É possível criar APIs com outras estratégias de autenticação, inclusive com cookies, porém o uso do JWT tem algumas vantagens e uma grande popularidade hoje em dia, por isso iremos utilizar somente para a parte da API.
+
+#### 1 - JWT (JSON Web Tokens)
+É possível criar APIs com outras estratégias de autenticação, inclusive com cookies, porém o uso do JWT tem algumas vantagens e uma grande popularidade hoje em dia, por isso iremos utilizar somente para a parte da API.
+
+Um JWT nada mais é que um token com dados assinado pelo serviço que o criou. Esses dados não podem ser alterados sem que a assinatura se invalide. Para a assinatura ser realizada com sucesso, é necessário que quem o gerou utilize um segredo (como uma senha) que também será utilizado para o decodificar e o verificar no futuro. Esse segredo não pode ser revelado para o mundo externo, devendo somente ficar em posse da aplicação que gera e verifica os tokens JWT (No nosso caso a API no projeto Admin).
+
+A nossa estratégia será simples: No processo de sign_in, a API irá verificar se o e-mail e senha do usuário estão válidos e gerar um JWT assinado com a informação se esse usuário é um cliente ou funcionário, juntos com os dados dele. Sim, iremos autenticar com JWT tanto funcionários (usuários do PDV) como clientes (usuários da loja virtual). Esse JWT será retornado para o sistema correspondente e ele deverá se encarregar de guardar esse token JWT para realizar as operações que precisam que o usuário esteja autenticado, como por exemplo: criar vendas pelo PDV ou pela loja virtual.
+
+A API deverá então, nessas ações que requerem autenticação, verificar se o token JWT enviado, junto com os restantes dos dados, é válido e de um cliente ou funcionário cadastrado no sistema, antes de realizar a operação.
+
+Como estamos usando Node JS, vamos usar uma biblioteca chamada [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) para criar JWTs assinados na autenticação e verificar JWTs enviados para a API nas ações que requerem O usuário logado.
+
+Para instalar a biblioteca digite no terminal:
+
+    $ npm install jsonwebtoken
+
+Vamos criar as rotas para a API. Para isso crie uma pasta chamada "api" dentro de "routes" (`routes/api/index.js`) e lá crie 5 arquivos:
+
+* index.js
+* auth.js
+* clients.js
+* products.js
+* sales.js
+
+Cada um desses arquivos irá conter rotas com as ações correspondentes ao seu nome e o arquivo index.js irá basicamente agregar todos os demais para manter o projeto organizado.
+
+* `index.js` - Esse arquivo simplesmente inclui os demais e cria as rotas correspondentes para cada um deles. O index.js é o arquivo padrão que deve ser incluído no app.js para a rota raíz da api: '/api'. Iremos fazer esse procedimento ao final da apresentação dos arquivos restantes da API.
+* `auth.js` é responsável pela autenticação da API, utilizando a estratégia de tokens JWT. Existem 3 rotas nesse arquivo:
+
+    - POST /employee/sign_in
+    - POST /client/sign_in
+    - POST /client/registration
+
+* `client.js` - Como visto nos comentários do código, esse arquivo só tem uma rota que lista todos os clientes da base caso o usuário que a chamou seja um funcionário e tenha passado um token JWT de um funcionário (employee), ou seja, essa rota é restrita para funcionaŕios. Será utilizada exclusivamente pelo PDV.
+
+* `products.js` - Esse arquivo tem uma rota de busca de produtos, com todos os detalhes da implementação com comentários no código. Além disso existe uma rota que busca um produto específico por ID. Em ambas as rotas é retornado, além dos dados do produto, o nome da sua categoria, com o uso do leftJoin.
+* `sales.js` - São apenas duas rotas aqui, uma para se buscar uma venda(sale) do banco e a outra para se criar uma nova venda. Todos os detalhes de implementação estão comentados no código e servem como explicação de cada comando. Repare que a rota de criação de uma venda pode ser executada por um usuário do tipo employee ou client. Isso é determinado e verificado pelo seu token JWT. No caso de um employee criando a venda, então é uma venda de balcão pelo PDV e deve ser utilizado o clientID passado para a API para se criar a venda. Caso seja uma venda criada por um cliente, então se trata de uma compra pela loja virtual e então o clientID utilizado nessa venda é o do usuário (client) logado, ou seja, o clientID é obtido a partir do token JWT.
+  
+<details>
+<summary>routes/api/index.js :eye: </summary>
+    
+    const express = require('express');
+    const authRouter = require('./auth');
+    const clientsRouter = require('./clients');
+    const productsRouter = require('./products');
+    const salesRouter = require('./sales');
+
+    const router = express.Router();
+
+    router.use('/auth', authRouter);
+    router.use('/clients', clientsRouter);
+    router.use('/products', productsRouter);
+    router.use('/sales', salesRouter);
+
+    module.exports = router;
+</details>
+
+<details>
+<summary>routes/api/auth.js :eye: </summary>
+    
+    var express = require('express');
+    var router = express.Router();
+
+    const knexConfig = require('../../knexfile');
+    const knex = require('knex')(knexConfig);
+
+    const bcrypt = require('bcrypt');
+    const jwt = require('jsonwebtoken');
+    const segredoJWT = 'frase segredo para critografia do jwt';
+
+    // employee sign_in
+    router.post('/employee/sign_in', async(req, res) => {
+    // busca employee no banco com esse email
+    const employee = await knex.table('employees').where({ email: req.body.email }).first();
+
+    // Caso o employee não exista ou sua senha criptografada seja diferente da armazenada no banco, retorna um erro:
+      if (!employee || !bcrypt.compareSync(req.body.password, employee.password)) {
+        return res.status(401).json({
+          message: 'Funcionário não existe'
+        });
+      }
+
+    // criação do conteúdo (payload) do token JWT com o employee encontrado e com senha correta
+      const conteudoJWT = {
+        employee: employee
+      };
+
+    // gera um token com o conteúdo (payload) e assinado com o segredoJWT. É atribuído uma expiração de 2 dias para o token.
+      const token = jwt.sign(conteudoJWT, segredoJWT, { expiresIn: '2 days' });
+
+    // o token é adicionado ao employee, que é retornado no JSON
+      employee.token = token;
+      return res.json({ employee });
+    });
+
+    // client sign_in
+    router.post('/client/sign_in', async(req, res) => {
+    // busca client no banco com esse email
+      const client = await knex.table('clients').where({ email: req.body.email }).first();
+
+    // Caso o client não exista ou sua senha criptografada seja diferente da armazenada no banco, retorna um erro:
+      if (!client || !bcrypt.compareSync(req.body.password, client.password)) {
+        return res.status(401).json({
+          message: 'Cliente não existe'
+        });
+      }
+
+      // criação do conteúdo (payload) do token JWT com o employee encontrado e com senha correta
+      const conteudoJWT = {
+        client: client
+      };
+
+     // gera um token com o conteúdo (payload) e assinado com o segredoJWT. É atribuído uma expiração de 2 dias para o token.
+      const token = jwt.sign(conteudoJWT, segredoJWT, { expiresIn: '2 days' });
+
+     // o token é adicionado ao client, que é retornado no JSON
+      client.token = token;
+      return res.json({ client });
+    });
+
+    // client registration (from website)
+    router.post('/client/registration', async(req ,res) => {
+    // busca client no banco com esse email
+      const existingClient = await knex.table('clients').where({ email: req.body.email }).first();
+
+    // Se o client já existe, retorna um erro pois não pode cadastrar dois com o mesmo e-mail
+      if (existingClient) {
+        return res.status(401).json({
+          message: 'Cliente já existe com esse e-mail'
+        });
+      }
+
+    // constroi o objeto com os dados do novo client(incluindo a senha critograda com o bcrypt)
+      let newClientData = {
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 10)
+      };
+
+    // insere o client no banco e recebe um array que deve conter só um elemento (o id do cliente inserido)
+      let clientIDs = await knex.table('clients').insert(newClientData);
+
+    // retorna uma mensagem de sucesso e o ID do client inserido no banco (primeiro elemento do array retornado pelo comando insert)
+      return res.json({
+        message: 'Cliente registrado com sucesso',
+        clienteID: clientIDs[0]
+      });
+    });
+
+    module.exports = router;
+</details>
+
+<details>
+<summary>routes/api/client.js :eye: </summary>
+    
+    var express = require('express');
+    var router = express.Router();
+
+    const knexConfig = require('../../knexfile');
+    const knex = require('knex')(knexConfig);
+
+    const requireJWT = require('../../middlewares/requireJWT');
+
+    // Retorna uma lista de cliente. Requer que o usuário esteja logado pelo uso do middleware requireJWT
+      router.get('/', [requireJWT], async (req, res) => {
+
+    // obtem o JWT decodificado pelo middleware requireJWT e salvo em res.locals.jwt
+      const jwt = res.locals.jwt;
+
+    // verifica se não é um JWT de um employee e retorna um erro
+      if (!jwt.employee) {
+        return res.status(401).json({
+         message: 'Não é um funcionário'
+       });
+    }
+
+     // Obtém a lista de clientes da base de dados e retorna um JSON com ela.
+    const clients = await knex.table('clients').select(['id', 'name', 'email']);
+      res.json({
+       clients
+     });
+    });
+
+    module.exports = router;
+</details>
+
+<details>
+<summary>routes/api/products.js :eye: </summary>
+
+    var express = require('express');
+    var router = express.Router();
+
+    const knexConfig = require('../../knexfile');
+    const knex = require('knex')(knexConfig);
+
+    // Busca de produtos.
+    router.get('/search', async(req, res) => {
+
+    // Obtem um query builder do knex da tabela products 
+      let productsQuery = knex.table('products');
+
+    // se o "term" de busca foi passado na query string da URL
+      if (req.query.term) {
+
+    // adiciona no query builder as restrições da busca por nome e descrição
+        productsQuery = productsQuery
+          .where('name', 'LIKE', `%${req.query.term}%`)
+          .orWhere('description', 'LIKE', `%${req.query.term}%`);
+      }
+
+    // se for passado um category_id na query string da URL
+      if (req.query.category_id) {
+
+    // adiciona a restrição de buscar produtos somente por uma determinada categoria (category_id)
+    // Exemplo; http://localhost:3000/api/products/search?category_id=7
+        productsQuery = productsQuery
+          .where('category_id', '=', req.query.category_id);
+      }
+
+    // Caso tenha sido passado o campo "order", muda a ordenação da busca (name ou price)
+    // Exemplo: http://localhost:3000/api/products/search?order=price
+      if (req.query.order) {
+        if (req.query.order == 'name') {
+          productsQuery = productsQuery.orderBy('name');
+        } else if (req.query.order == 'price') {
+          productsQuery = productsQuery.orderBy('price');
+        }
+      }
+
+    // faz um left join de products com categories para poder retornar o nome da categoria do produto em uma consulta só.
+      productsQuery = productsQuery.leftJoin('categories', 'products.category_id', 'categories.id');
+    // informa que além dos campos de produtos, retornar também o nome da categoria dele como categoryName
+      productsQuery = productsQuery.select('products.*', 'categories.name as categoryName')
+      const products = await productsQuery;
+
+      res.json({ products })
+    });
+
+    // Obtém um produto específico por ID
+    router.get('/:id', async (req, res) => {
+
+    // busca um único produto, restrito por ID e com o nome da categoria no campo categoryName
+      const product = await knex.table('products').where('products.id', '=', req.params.id)
+      .leftJoin('categories', 'products.category_id', 'categories.id')
+      .select('products.*', 'categories.name as categoryName')
+      .first();
+      return res.json({ product });
+    })
+
+    module.exports = router;
+
+</details>
+
+#### COMENTÁRIOS SOBRE AS ROTAS `/employee/sign_in` e `/client/sign_in`:
+As rotas `/employee/sign_in` e `/client/sign_in` são muito parecidas. A a única diferença entre elas é que uma autentica um funcionário e a outra autentica um cliente da loja. Os tokens JWT gerados mudam um pouco, pois retornam campos diferentes (employee para uma rota e client para a outra rota).
+
+Essa diferença do JWT (client/employee), permite que se possa verificar se o JWT gerado pertence a um cliente ou a um funcionário.
+
+* `/employee/sign_in` e `/client/sign_in` são as rotas responsáveis por autenticar um employee (funcionário) ou um client (cliente) por email/senha e gerar um token;
+* Inicialmente é buscado o employee no banco pelo email (caso o employee/client não exista ou sua senha criptografada seja diferente da armazenada no banco) retorna um erro;
+* É criado um token JWT com e dentro do payload os dados do employee;
+* O token é inserido no employee e retornado como JSON;
+* Isso cria um campo especial no token chamado "exp" com um valor que representa seu momento de expiração;
+
+Note que a assinatura do token é setada para expirar em 2 dias com o comando:
+
+    const token = jwt.sign(conteudoJWT, segredoJWT, { expiresIn: '2 days' });
+
+#### COMENTÁRIOS SOBRE A ROTA `/client/registration`:
+* Essa rota registra um novo cliente no banco de dados;
+* É uma rota simples que verifica se um cliente a ser registrado já existe no banco de dados, caso contrário o registra com a senha informada criptografada com o bcrypt.
+
+* Tanto os funcionários logados no PDV poderão usar essa rota para cadastrar clientes na loja física, quanto os próprios clientes poderão usar a loja virtual para se cadastrar através dessa rota na API.

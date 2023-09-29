@@ -7,8 +7,12 @@ exports.seed = async function (knex) {
   // Deletes ALL existing entries
   await knex('categories').del()
   await knex('categories').insert([
-    { name: 'Alimentos' },
+    { name: 'Petiscos' },
+    { name: 'Coleiras' },
+    { name: 'Ração' },
+    { name: 'Medicamentos' },
     { name: 'Brinquedos' },
-    { name: 'Cama e mesa' }
+    { name: 'Cama e mesa' },
+    { name: 'Outros' }
   ]);
 };

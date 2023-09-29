@@ -2,19 +2,19 @@
 
 <% if (error) { %>
 
-    <div style="color: red">
-        Erro no E-Mail/senha
+<div style="color: red">
+  Acesso ao painel de administração apenas para usuários autorizados. Verifique suas credenciais.
 
-    </div>
+</div>
 
-    <% } %>
+<% } %>
 
-        <form method="POST" action="/auth/sign_in">
+<form method="POST" action="/auth/sign_in">
 
-            E-Mail: <input type="email" name="email" /><br />
+  E-Mail: <input type="email" name="email" /><br />
 
-            Senha: <input type="password" name="password" /><br />
+  Senha: <input type="password" name="password" /><br />
 
-            <input type="submit" value="Entrar" /><br />
+  <input type="submit" value="Entrar" /><br />
 
-        </form>
+</form>

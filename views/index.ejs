@@ -2,25 +2,23 @@
 <html>
 
 <head>
-  <title>
-    <%= title %>
-  </title>
+  <title><%= title %></title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
 <body>
-  <h1>
-    <%= title %>
-  </h1>
-  <p>Welcome to <%= title %>
-  </p>
-  <p>Logado como <%= employee.name %>
-  </p>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <p>Logado como <%= employee.name %></p>
   <p>
     <a href="/auth/sign_out">Sair do sistema</a>
   </p>
   <a>
-    <a href="./products">Gerenciar produtos</a>
+    <a href="/products">Gerenciar produtos</a>
+  </a>
+  |
+  <a>
+    <a href="/sales/report">Listagem de vendas</a>
   </a>
 </body>
 
