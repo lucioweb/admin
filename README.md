@@ -1,4 +1,4 @@
-## INTRODUÇÃO 
+# INTRODUÇÃO 
 ### Apresentação do sistema administrativo que será utilizado como base para a criação da loja virtual `PetTopStore`.
 O projeto será modularizado, com plataformas e tecnologias diferentes para cada módulo da aplicação e que terá as seguintes funcionalidades:
 * [PAINEL DE ADMINISTRAÇÃO](https://materialpublic.imd.ufrn.br/curso/disciplina/3/77/9): onde o administrador do sistema poderá gerenciar produtos e visualizar relatórios de vendas. Também contempla uma API de acesso seguro aos dados para os outros módulos.
@@ -7,27 +7,31 @@ O projeto será modularizado, com plataformas e tecnologias diferentes para cada
 
 Tecnologias do módulo administrativo:
 * `Node JS`+`Express` no back-end;
+* `EJS` Embedded JavaScript (Javascript Incorporado) em HTML, por exemplo;
 * `MySQL` como banco de dados;
-* `knex JS` como biblioteca de acesso ao banco de dados;
+* `knex JS` como biblioteca de acesso ao banco de dados (criação de migrations; criação de seeds; manipulação da base de dados de modo geral);
 * `bcrypt` como biblioteca para tratar a criptografia de senhas;
-* `multe` como biblioteca de gerenciamento de uploads de arquivos no sistema
+* `multer` como biblioteca de gerenciamento de uploads de arquivos no sistema;
 * `cookie-session` para quando o usuário estiver logado no sistema, um cookie seguro e criptografado será armazenado no seu navegador;
-* `jsonwebtoken` como estratégia de autenticação na API.
+* `jsonwebtoken` como estratégia de autenticação na API;
+* `VSCode` como editor de código;
+* `Ubuntu 22.04.2 LTS (GNU/Linux 5.15.90.1-microsoft-standard-WSL2 x86_64)` como SO.
 
 O sistema administrativo conterá inicialmente as funcionalidades mais importantes, podendo ser escalado.
-
+# DESENVOLVIMENTO
 ### PARTE 1 - CRIAÇÃO E CONFIGURAÇÃO INICIAL DO PROJETO
   
-#### 1 - CRIAÇÃO DA PASTA QUE ABRIGARÁ TODO O PROJETO
+#### 1 - CRIAÇÃO `(mkdir pettopstore)` DA PASTA QUE ABRIGARÁ TODO O PROJETO
     $ mkdir pettopstore
 #### 2 - ALTERNA PARA A PASTA DO PROJETO
     $ cd pettopstore
-#### 3 - CRIA UMA APLICAÇÃO DE NOME `admin` UTILIZANDO O [GERADOR DE EXPRESS](https://expressjs.com/pt-br/starter/generator.html) (use a ferramenta geradora de aplicativos, express, para rapidamente criar uma estrutura básica de aplicativo).
+#### 3 - CRIAÇÃO DE UMA APLICAÇÃO DE NOME `admin` UTILIZANDO O [GERADOR DE EXPRESS](https://expressjs.com/pt-br/starter/generator.html) (use a ferramenta geradora de aplicativos, express, para rapidamente criar uma estrutura básica de aplicativo).
 O sistema administrativo da loja será a interface da aplicação onde os administradores da loja poderão acessar o cadastro de produtos e dados de vendas, assim como criar funcionários para a loja. Esse módulo irá contemplar também uma API que será utilizada pelos outros módulos.
+Para realizar a criação do `admin`, rode a seguinte linha de comando no seu terminal: 
 
     $ npx express-generator --view=ejs admin
     
-O comando acima criará um aplicativo do Express com suporte a `ejs` chamado `admin` no diretório atualmente em funcionamento a saber, `pettopstore`, que retornará a seguinte estrutura:
+[EJS](https://ejs.co/) é uma linguagem de modelagem simples que permite gerar marcação HTML com JavaScript. Como a criação do projeto foi com suporte a EJS, se observamos o conteúdo do arquivo `package.json` mais abaixo, veremos que a biblioteca do EJS já está instalada em nosso projeto. O comando acima criará um aplicativo do Express com suporte a `ejs` chamado `admin` no diretório atualmente em funcionamento a saber, `pettopstore`, com a seguinte estrutura:
 
     create : admin/ 
     create : admin/public/
@@ -47,11 +51,7 @@ O comando acima criará um aplicativo do Express com suporte a `ejs` chamado `ad
     create : admin/bin/www
 #### 4 - ALTERNANDO PARA O DIRETÓRIO `admin` COM O COMANDO:
     $ cd admin
-#### 5 - INSTALL DAS DEPENDÊNCIAS DO NODE:
-    $ npm install
-#### 6 - SUBINDO A APLICAÇÃO PARA O SERVIDOR: 
-    $ DEBUG=admin:* npm start
-##### Estrutura inicial do projeto gerado com o comando `$ npx express-generator`:
+##### Estrutura inicial do diretório `admin` do projeto gerado com o comando `$ npx express-generator`:
      ├── app.js
      ├── bin
      │   └── www
@@ -69,34 +69,57 @@ O comando acima criará um aplicativo do Express com suporte a `ejs` chamado `ad
      └── views
          ├── error.ejs
          └── index.ejs    
-
-
-#### 7 - INSTALANDO AS DEMAIS BIBLIOTECAS DO PROJETO
-##### AJV - Biblioteca de validação de schema JSON:     
-    $ npm install ajv --save
-##### AJV-FORMATS - Biblioteca de validação de formato de dados do schema JSON:   
-    $ npm install ajv-formats --save
+#### 5 - INSTALL DAS DEPENDÊNCIAS DO NODE:
+    $ npm install
+#### 6 - RODANDO (STARTANDO) A APLICAÇÃO: 
+    $ DEBUG=admin:* npm start
+#### 7 - ESTRUTURA INICIAL DO ARQUIVO `package.json`, APÓS A INSTALAÇÃO DO PROJETO COM `$ npx express-generator --view=ejs admin`:
+    {
+      "name": "admin",
+      "version": "0.0.0",
+      "private": true,
+      "scripts": {
+        "start": "node ./bin/www"
+      },
+      "dependencies": {
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "ejs": "~2.6.1",
+        "express": "~4.16.1",
+        "http-errors": "~1.6.3",
+        "morgan": "~1.9.1"
+      }
+    }
+#### 8 - INSTALANDO AS DEMAIS BIBLIOTECAS DO PROJETO
 ##### NODEMON - Biblioteca que verifica as alteração no código e executa o reload do servidor express:       
     $ npm install --save-dev nodemon
-##### Script de inicialização do servidor Express no `package.json` com o `nodemon`:
+
+Um objeto JSON inicia e termina com chaves { }. Ele tem dentro de si, dois ou mais pares de key/value, separados po uma vírgula. Cada `key` é seguida de dois pontos para separá-la do `value`. Dito isso, acrescente à key "scripts", que recebe um objeto, o seguinte value, que fará com que o nodemon execute o reload do servidor toda vez que houver alteração no seu código:
+
     ...
 
     "scripts": {
       "dev": "nodemon app.js"      
      },
+    
+    ...
+Agora, quando quiser startar o servidor express, execute no terminal a seguinte linha de comando: 
 
+    $ npm run dev 
+    
+Prontinho. Toda vex que fizer alterações no seu código o nodemom se encarregará de restartar o servidor.
+##### AJV - Biblioteca de validação de schema JSON:     
+    $ npm install ajv --save
+##### AJV-FORMATS - Biblioteca de validação de formato de dados do schema JSON:   
+    $ npm install ajv-formats --save
 ##### uuid - Biblioteca que gera `ids` universais e únicos:       
     $ npm install uuid --save
 ##### [Knex JS](https://knexjs.org/guide/#node-js) e mysql em um só comando    
     $ npm install knex mysql
 O knex.js é definido como um "query builder", ou seja, um construtor de consultas para o banco de dados ao qual ele se conecta. Foi pensado para ser flexível e simples de usar, fornecendo um conjunto de funcionalidades básicas para a realização de qualquer tipo de operação que se deseje realizar em um banco de dados. Note que estamos instalando o driver mysql com o knex, que suporta tanto o banco de dados MySQL como o MariaDB.
-
 ### PARTE 2 - CRIAÇÃO DO BANCO DE DADOS DA APLICAÇÃO:
-
 #### - 1 - CRIE A BASE DE DADOS DA APLICAÇÃO COM A QUERY:
-
      mysql> CREATE DATABASE pettopstore; 
-
 #### - 2 TABELAS QUE SERÃO IMPLEMENTADAS NA BASE DE DADOS VIA MIGRATIONS
 As tabelas que serão implementadas na base de dados `pettopstore` são:
 * employees
@@ -119,9 +142,7 @@ A tabela `sales` tem as vendas realizadas no site ou na loja física. Ela guarda
 A tabela `items` relacionará `products` e `sales` (N-N) e armazenará dois ids (sale_id e product_id) e com ela conseguiremos saber que produtos compôem cada venda.
 
 ### PARTE 3 - CRIAÇÃO E CONFIGURAÇÃO DO ARQUIVO DE CONEXÃO DA APLICAÇÃO COM O BANCO DE DADOS
-
-#### O ARQUIVO DE CONEXÃO
-Criando na estrutura do projeto o arquivo com as [diretivas de conexão com o banco de dados](https://knexjs.org/guide/#configuration-options) da aplicação chamado `knexfile.js`, com o seguinte conteúdo.
+Crie na estrutura do projeto o arquivo com as [diretivas de conexão com o banco de dados](https://knexjs.org/guide/#configuration-options) da aplicação chamado `knexfile.js`, com o seguinte conteúdo.
 
     module.exports = {
     client: 'mysql2',
@@ -146,7 +167,6 @@ Criando na estrutura do projeto o arquivo com as [diretivas de conexão com o ba
 Tenha em mente que você já deverá ter um SGBD instalado em seu computador (client); um banco de dados criado (database) e um usuário (user e password) com privilégios no banco de dados (GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost', FLUSH PRIVILEGIES, etc).
 
 ### PARTE 4 - CRIANDO `migrations`:
-
 #### 1 - CRIANDO A `migration` de nome `employees`:
 Agora vamos testar a configuração do `knexfile.js`, criando tabelas no banco de dados da aplicação, utilizando `migrations`, um recurso de linha de comando presente também no `knex.js`.
 
@@ -396,16 +416,16 @@ Repare que o arquivo create_initial_employees.js realiza as ações:
 * Depois, para a mesma tabela, adiciona 2 employees, um com is_admin = true (Maria) e outro com is_admin = false (João). Note que nesse sistema administrativo não será possível logar como João, pois ele não é administrador.
 * Os employees são criados com a senha criptografada usando o comando `bcrypt.hashSync(senha_do_employee, 10)`, que recebe uma senha e retorna uma hash (versão critografada) dela que pode ser armazenada no banco de dados com segurança. Esse número 10, no segundo parâmetro do hashSync serve como configuração do método de criptografia, algo interno do bcrypt.
 
-#### 2 - RODANDO A SEED
+#### 2 - RODANDO SEEDS
 Para rodar o seed execute no terminal:
 
     $ npx knex seed:run
 
-CRIANDO A SEED `categories`: 
+#### 3 - CRIANDO A SEED `categories`: 
 
     $ npx knex seed:make create_initial_categories  
 
-SEED PARA A TABELA `create_initial_categories`: 
+Conteúdo da SEED `create_initial_categories`: 
 
     /**
      * @param { import("knex").Knex } knex
@@ -421,11 +441,11 @@ SEED PARA A TABELA `create_initial_categories`:
       ]);
     };
 
-EXECUTANDO UMA SEED ESPECÍFICA
+#### - EXECUTANDO UMA SEED ESPECÍFICA,`create_initial_categories` NO CASO:
 
     $ npx knex seed:run --specific=create_initial_categories.js
 
-### 3ª PARTE - API
+### PARTE 5 - API
 No projeto admin, atualmente temos uma autenticação para os administradores (employees com admin=true) realizada com a estratégia cookie-session. Para a API iremos utilizar uma outra estratégia: JSON Web Tokens (JWT).
 
 É possível criar APIs com outras estratégias de autenticação, inclusive com cookies, porém o uso do JWT tem algumas vantagens e uma grande popularidade hoje em dia, por isso iremos utilizar somente para a parte da API.

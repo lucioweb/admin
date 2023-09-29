@@ -21,7 +21,6 @@ var apiRouter = require('./routes/api');
 
 var app = express();
 
-
 // usando o cookie-session
 app.use(cookieSession({
   name: 'pettopstore_session', // nome do cookie no navegador
