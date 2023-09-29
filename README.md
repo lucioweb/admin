@@ -690,5 +690,4 @@ Note que a assinatura do token é setada para expirar em 2 dias com o comando:
 #### COMENTÁRIOS SOBRE A ROTA `/client/registration`:
 * Essa rota registra um novo cliente no banco de dados;
 * É uma rota simples que verifica se um cliente a ser registrado já existe no banco de dados, caso contrário o registra com a senha informada criptografada com o bcrypt.
-
 * Tanto os funcionários logados no PDV poderão usar essa rota para cadastrar clientes na loja física, quanto os próprios clientes poderão usar a loja virtual para se cadastrar através dessa rota na API.
