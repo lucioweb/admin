@@ -9,10 +9,10 @@ exports.seed = async function (knex) {
   await knex('categories').insert([
     { name: 'Petiscos' },
     { name: 'Coleiras' },
-    { name: 'Ração' },
+    { name: 'Ração animal' },
     { name: 'Medicamentos' },
     { name: 'Brinquedos' },
     { name: 'Cama e mesa' },
-    { name: 'Outros' }
+    { name: 'Outras categorias' }
   ]);
 };

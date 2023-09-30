@@ -3,12 +3,12 @@
 <% for (const sale of sales) { %>
 <div style="border: 1px solid gray; margin-bottom: 10px">
   <% if (sale.employee_id) { %>
-  Funcionário: <%= sale.employee.name %><br />
+  Funcionário que realizou a venda: <%= sale.employee.name %><br />
   <% } %>
   <% if (sale.client_id) { %>
-  Cliente: <%= sale.client.name %><br />
+  Cliente que fez a compra: <%= sale.client.name %><br />
   <% } %>
-  Items:
+  Itens da venda:
   <ul>
     <% for (const item of sale.items) { %>
     <li><%= item.product.name %></li>
