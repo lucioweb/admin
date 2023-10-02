@@ -6,7 +6,7 @@ const knex = require('knex')(knexConfig);
 
 const requireJWT = require('../../middlewares/requireJWT');
 
-// Retorna uma lista de cliente. Requer que o usuário esteja logado pelo uso do middleware requireJWT
+// Retorna uma lista de funcionários. Requer que o usuário esteja logado pelo uso do middleware requireJWT
 router.get('/', [requireJWT], async (req, res) => {
 
     // obtem o JWT decodificado pelo middleware requireJWT e salvo em res.locals.jwt
@@ -19,9 +19,9 @@ router.get('/', [requireJWT], async (req, res) => {
         });
     }
 
-    // Obtém a lista de clientes da base de dados e retorna um JSON com ela.
-    const clients = await knex.table('clients').select(['id', 'name', 'email']);
-    res.json({ clients });
+    // Obtém a lista de funcionários da base de dados e retorna um JSON com ela.
+    const employees = await knex.table('employees').select(['id', 'name', 'email']);
+    res.json({ employees });
 });
 
 module.exports = router;

@@ -721,3 +721,12 @@ Note que a assinatura do token é setada para expirar em 2 dias com o comando:
 * Essa rota registra um novo cliente no banco de dados;
 * É uma rota simples que verifica se um cliente a ser registrado já existe no banco de dados, caso contrário o registra com a senha informada criptografada com o bcrypt.
 * Tanto os funcionários logados no PDV poderão usar essa rota para cadastrar clientes na loja física, quanto os próprios clientes poderão usar a loja virtual para se cadastrar através dessa rota na API.
+
+# CONCLUSÃO DO ADMIN
+Sim, é verdade que o sistema do admin pode melhorar bastante, tanto visualmente como com mais funcionalidades.
+
+Como sugestão você pode adicionar uma biblioteca de componentes UI como o Bootstrap ou o de repente usar o TailwindCSS para estilizar seu sistema de administração, melhorando sua usabilidade. Outras sugestões é adicionar mais validações de campos nas ações e mensagens de erros personalizadas para o usuário.
+
+O que pretendemos por enquanto é ter uma base simples para se criar os outros sistemas (PDV e Loja on-line) e deixar o código puro e para que seja fácil de alterar de acordo com o seu gosto e usando as tecnologias que desejar.
+
+Vamos nas próximas aulas criar o sistema de PDV (Ponto de venda), para permitir que funcionários entrem nesse sistema, criem clientes e vendas como se fosse em uma loja física. Vamos também mais a frente criar uma loja virtual simples para o cliente poder realizar compras de forma autônoma. Esses dois sistemas que criaremos irão utilizar tecnologias diferentes e usarão exclusivamente a nossa API que criamos como fonte de dados e não farão conexão direta com o banco de dados.
