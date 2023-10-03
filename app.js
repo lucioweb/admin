@@ -27,7 +27,15 @@ app.use(cookieSession({
 
 }));
 
-// view engine setup
+// view engine setup (Motor de visualizações)
+
+/**
+ * Existem duas partes para configurar o motor. 
+ * Primeiro, definimos o valor 'views' para especificar a pasta onde os modelos serão armazenados 
+ * (neste caso, a subpasta /views ). 
+ * Em seguida, definimos o valor 'view engine', para especificar a biblioteca de modelos (neste caso, o "ejs").
+ */
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
