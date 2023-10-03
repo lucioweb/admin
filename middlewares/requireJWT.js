@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const segredoJWT = 'frase segredo para critografia do jwt';
 
 module.exports = async (req, res, next) => {
-    // verifica se a sessão está vazia (deslogado)
+    // verifica se a sessão está vazia (não há usuário logado)
     if (!req.headers.authorization) {
         return res.status(401).json({
             message: 'Não autorizado'

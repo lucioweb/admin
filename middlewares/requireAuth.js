@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     if (!req.session || !req.session.logged_as) {
         return res.redirect('/auth/login_form');
     }
-    // caso a sessão exista o usuário está logado.
+    // caso a sessão exista o usuário está logado no sistema de admin.
     const idAdminLogado = req.session.logged_as;
     // buscar o administrador no banco de dados pelo id
     const employee = await knex.table('employees').where({ id: idAdminLogado }).first();
