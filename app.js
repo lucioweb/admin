@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
 const requireAuth = require('./middlewares/requireAuth');
 
 // importando o cookie-session
@@ -27,7 +26,6 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 
 }));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
