@@ -1,9 +1,6 @@
 GET https://localhost:3000/api/clients
-Authorization: "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZSI6eyJpZCI6MSwibmFtZSI6IkzDumNpbyIsImVtYWlsIjoibHVjaW9AbHVjaW8uY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkOC4uYXAxWUVWQVZkZEV6NTVPYVM4LmFRNzdvVS5kQ2ozZWFHbDR2ekpsUDl3Nkh6L0xuSW0iLCJpc19hZG1pbiI6MX0sImlhdCI6MTY5NjAyMDMxMywiZXhwIjoxNjk2MTkzMTEzfQ.WcXxa4Pt4Lg0kfgo-m1FZ6fXzyzKYR9Jus7paObVQ2I"
-
- 
-   
-   
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZSI6eyJpZCI6MSwibmFtZSI6ImZ1bmNpb25hcmlvMSIsImVtYWlsIjoiZnVuYzFAZnVuYzEuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkYkFncDdDbDR3Mm5GU3FYblYzOWZkZTlPdU90S0lDVEluR0hGcGVXb1NwZnJHaUlEMFVnRk8iLCJpc19hZG1pbiI6MX0sImlhdCI6MTY5NjI4NTEwNywiZXhwIjoxNjk2NDU3OTA3fQ.36H77xZGW1XCd6FtUsGHwtBptLRwmiAVayl5PvvNJ5A
 
 ###
 
@@ -11,9 +8,9 @@ POST http://localhost:3000/api/auth/client/registration
 Content-type: application/json
 
 {
-    "name": "silvanalemos",
-    "email":"silvanalemos@luciolemos",
-    "password": "silvanalemos"   
+    "name": "clinte8",
+    "email":"cliente8@cliente8.com",
+    "password": "cliente8"   
 }
 
 ###
@@ -22,8 +19,8 @@ POST http://localhost:3000/api/auth/client/sign_in
 Content-type: application/json
 
 {
-    "email":"flavio@flavio",
-    "password": "123456"   
+    "email":"cliente8@cliente8.com",
+    "password": "cliente8"   
 }
 
 ###

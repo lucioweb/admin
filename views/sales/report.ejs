@@ -2,16 +2,13 @@
 <a href="/">Voltar</a>
 <% for (const sale of sales) { %>
 <div style="border: 1px solid gray; margin-bottom: 10px">
-  <% if (sale.employee_id) { %>
-  Funcionário que realizou a venda: <%= sale.employee.name %><br />
-  <% } %>
-  <% if (sale.client_id) { %>
-  Cliente que fez a compra: <%= sale.client.name %><br />
-  <% } %>
+  <% if (sale.employee_id) { %>Funcionário que realizou a venda: <%= sale.employee.name %><br /> <% } %>
+  <% if (sale.client_id) { %>Cliente que fez a compra: <%= sale.client.name %><br /> <% } %>
   Itens da venda:
   <ul>
     <% for (const item of sale.items) { %>
-    <li><%= item.product.name %></li>
+    <li> Produto Cod <%= item.product.id %> - <%= item.product.name %> R$ <%= item.product.price %></li>
+
     <% } %>
   </ul>
 </div>

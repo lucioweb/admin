@@ -1,7 +1,7 @@
-GET http://localhost:8080/
-{
-    "token": "Flávio"    
-}
+GET https://localhost:3000/api/clients
+Content-Type: application/xml
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZSI6eyJpZCI6MSwibmFtZSI6ImZ1bmNpb25hcmlvMSIsImVtYWlsIjoiZnVuYzFAZnVuYzEuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkYkFncDdDbDR3Mm5GU3FYblYzOWZkZTlPdU90S0lDVEluR0hGcGVXb1NwZnJHaUlEMFVnRk8iLCJpc19hZG1pbiI6MX0sImlhdCI6MTY5NjI4NTEwNywiZXhwIjoxNjk2NDU3OTA3fQ.36H77xZGW1XCd6FtUsGHwtBptLRwmiAVayl5PvvNJ5A
+
 ###
 
 GET http://localhost:8080/aluno
@@ -12,23 +12,12 @@ GET http://localhost:8080/aluno/425ff2ad-d097-46ee-b0ba-071c4abbd37f
 
 ###
 
-POST http://localhost:3000/api/auth/employees/registration
-Content-type: application/json
-
-{
-    "name": "Flávio",
-    "email":"flavio@flavio",
-    "password": "123456"   
-}
-
-###
-
 POST http://localhost:3000/api/auth/employee/sign_in
 Content-type: application/json
 
 {
-    "email":"lucio@lucio.com",
-    "password": "lucio"   
+    "email":"func1@func1.com",
+    "password": "func1"   
 }
 
 ###
