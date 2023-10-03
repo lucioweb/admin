@@ -7,15 +7,10 @@ var logger = require('morgan');
 
 const requireAuth = require('./middlewares/requireAuth');
 
-// outras rotas de interesse
-// var usersRouter = require('./routes/users');
-
-
 // importando o cookie-session
 var cookieSession = require('cookie-session')
 
 var indexRouter = require('./routes/index');
-
 
 // importando rotas de autenticação
 var authRouter = require('./routes/auth');
@@ -43,10 +38,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// usando outras rotas de interesse
-// app.use('/users', usersRouter);
-
 
 // usando rotas da API
 app.use('/api', apiRouter);
