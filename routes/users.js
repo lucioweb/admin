@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-
+// Variáveis para testar o recurso for each
 var mascots = [
   { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012 },
   { name: 'Tux', organization: "Linux", birth_year: 1996 },

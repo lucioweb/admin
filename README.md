@@ -220,7 +220,7 @@ Até aqui, apenas criamos a `migration`. Para executá-la devemos rodar no termi
 
     $ npx knex migrate:up
 
-Isso fará com que o método "up" da próxima migração ainda não executada seja rodado. Como no nosso caso só temos uma, ela será a  `migration` executada. Repare que se você rodar esse comando mais de uma vez, a migração não executará novamente pois o knex guarda a informação de quais migrações foram criadas.
+Isso fará com que o método "up" da próxima migração ainda não executada seja rodado. Como no nosso caso só temos uma migration não rodada, ela será a  `migration` executada. Repare que se você rodar esse comando mais de uma vez, a migração não executará novamente pois o knex guarda a informação de quais migrações foram criadas.
 
 #### 4 - CRIANDO AS DEMAIS `migrations`:
   
