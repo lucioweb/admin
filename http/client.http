@@ -1,10 +1,13 @@
-GET https://localhost:3000/api/clients
-Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZSI6eyJpZCI6MSwibmFtZSI6ImZ1bmNpb25hcmlvMSIsImVtYWlsIjoiZnVuYzFAZnVuYzEuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkYkFncDdDbDR3Mm5GU3FYblYzOWZkZTlPdU90S0lDVEluR0hGcGVXb1NwZnJHaUlEMFVnRk8iLCJpc19hZG1pbiI6MX0sImlhdCI6MTY5NjI4NTEwNywiZXhwIjoxNjk2NDU3OTA3fQ.36H77xZGW1XCd6FtUsGHwtBptLRwmiAVayl5PvvNJ5A
+GET http://localhost:3001/api/clients
+Authorization: "token" 
+
+{
+ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZSI6eyJpZCI6MSwibmFtZSI6ImZ1bmNpb25hcmlvMSIsImVtYWlsIjoiZnVuYzFAZnVuYzEuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkYkFncDdDbDR3Mm5GU3FYblYzOWZkZTlPdU90S0lDVEluR0hGcGVXb1NwZnJHaUlEMFVnRk8iLCJpc19hZG1pbiI6MX0sImlhdCI6MTY5NjI4NTEwNywiZXhwIjoxNjk2NDU3OTA3fQ.36H77xZGW1XCd6FtUsGHwtBptLRwmiAVayl5PvvNJ5A"
+}
 
 ###
 
-POST http://localhost:3000/api/auth/client/registration
+POST http://localhost:3001/api/auth/client/registration
 Content-type: application/json
 
 {
@@ -15,7 +18,7 @@ Content-type: application/json
 
 ###
 
-POST http://localhost:3000/api/auth/client/sign_in
+POST http://localhost:3001/api/auth/client/sign_in
 Content-type: application/json
 
 {
@@ -25,7 +28,7 @@ Content-type: application/json
 
 ###
 
-PUT http://localhost:3000/api/auth/client?id=155a45f9-8e28-4240-977c-d6bc77baaf72
+PUT http://localhost:3001/api/auth/client?id=155a45f9-8e28-4240-977c-d6bc77baaf72
 Content-type: application/json
 
 {

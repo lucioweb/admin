@@ -10,6 +10,7 @@ const requireAuth = require('./middlewares/requireAuth');
 var cookieSession = require('cookie-session')
 
 var indexRouter = require('./routes/index');
+//var usersRouter = require('./routes/users');
 
 // importando rotas de autenticação
 var authRouter = require('./routes/auth');
@@ -17,6 +18,10 @@ var authRouter = require('./routes/auth');
 // importando rotas da api
 var apiRouter = require('./routes/api');
 
+/**
+ * A seguir, criamos o objeto app, usando nosso módulo expresso importado e, 
+ * em seguida, o usamos para configurar o mecanismo de visualização (modelo). 
+ */
 var app = express();
 
 // usando o cookie-session
@@ -43,7 +48,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+/**
+ * usamos o express.static middleware para fazer com que o Express sirva todos os arquivos estáticos 
+ * no diretório /public na raiz do projeto.
+ */
 app.use(express.static(path.join(__dirname, 'public')));
+
+//app.use('/users', usersRouter);
 
 // usando rotas da API
 app.use('/api', apiRouter);

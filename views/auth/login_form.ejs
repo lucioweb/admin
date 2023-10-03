@@ -1,20 +1,40 @@
-<h1>Login</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-<% if (error) { %>
-
-<div style="color: red">
-  Acesso ao painel de administração apenas para usuários autorizados. Verifique suas credenciais.
-
+<div class="container my-2">
+  <h1>Pet Top Store - Login</h1>
 </div>
 
-<% } %>
 
-<form method="POST" action="/auth/sign_in">
+<div class="container mx-auto p-2">
 
-  E-Mail: <input type="email" name="email" /><br />
+  <div class="container my-3 py-5" style="width: 50%;">
 
-  Senha: <input type="password" name="password" /><br />
+    <form class="row g-3" method="POST" action="/auth/sign_in">
+      <div class="row mb-3">
+        <label for="inputEmail4" class="form-label">EMAIL</label>
+        <input type="email" class="form-control" id="inputEmail4" name="email">
+      </div>
 
-  <input type="submit" value="Entrar" /><br />
+      <div class="row mb-3">
+        <label for="inputPassword4" class="form-label">SENHA</label>
+        <input type="password" class="form-control" id="inputPassword4" name="password"">
+    </div>
 
-</form>
+    <div class=" row mb-3">
+        <button type="submit" class="btn btn-primary" value="Entrar">ENTRAR</button>
+      </div>
+
+      <div class="container">
+        <% if (error) { %>
+
+        <div style="color: red">
+          <p>
+            Acesso ao painel de administração apenas para usuários autorizados. Verifique suas credenciais.
+          </p>
+        </div>
+
+        <% } %>
+      </div>
+    </form>
+  </div>
+</div>
