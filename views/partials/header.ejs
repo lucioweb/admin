@@ -1,5 +1,8 @@
+<!-- CDN dos ícones do Bootstap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-light px-5">
-  <a class="navbar-brand" href="/">ADMIN</a>
+  <a class="navbar-brand" href="/">ADMIN <i class="bi bi-gear"></i></a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -13,6 +16,6 @@
     <span>Olá <%= employee.name %></span>
   </div>
   <form class="d-flex">
-    <a class="btn btn-primary" href="/auth/sign_out" role="button">SAIR</a>
+    <a class="btn btn-danger" href="/auth/sign_out" role="button">SAIR <i class="bi bi-box-arrow-left"></i></a>
   </form>
 </nav>

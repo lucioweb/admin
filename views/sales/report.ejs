@@ -5,23 +5,36 @@
   <a href="/">Voltar</a>
 </div>
 
-<div class="container mx-auto p-2"></div>
-<div class="container my-3 py-5" style="width: 50%;">
+<div class="container mx-auto p-2">
+  <div class="container my-3 py-5" style="width: 100%;">
+    <table id="datatable" class="table table-striped table-hover table-bordered display">
+      <thead class="table-light">
+        <tr>
+          <th scope="col" class="text-center align-middle" rowspan="2">FUNC</th>
+          <th scope="col" class="text-center align-middle" rowspan="2">CLIENT</th>
+          <th scope="col" class="text-center" colspan="3">ÍTENS</th>
+        </tr>
 
+      </thead>
+      <% for (const sale of sales) { %>
+      <tbody>
+        <tr>
+          <td scope="col" class="text-center"><% if (sale.employee_id) { %> <%= sale.employee.name %><br /> <% } %></td>
+          <td scope="col" class="text-center"><% if (sale.client_id) { %> <%= sale.client.name %><br /> <% } %></td>
+          <td scope="col" class="text-left">
+            <ol>
+              <% for (const item of sale.items) { %>
+              <li> Produto Cod <%= item.product.id %> - <%= item.product.name %> R$ <%= item.product.price %></li>
 
-  <% for (const sale of sales) { %>
-  <div class="container ps-3" style="border: 1px solid gray; margin-bottom: 10px">
-    <% if (sale.employee_id) { %>Funcionário que realizou a venda: <%= sale.employee.name %><br /> <% } %>
-    <% if (sale.client_id) { %>Cliente: <%= sale.client.name %><br /> <% } %>
-    Itens da venda:
-    <ol>
-      <% for (const item of sale.items) { %>
-      <li> Produto Cod <%= item.product.id %> - <%= item.product.name %> R$ <%= item.product.price %></li>
-
+              <% } %>
+            </ol>
+          </td>
+        </tr>
+        <!-- <div class="container ps-3" style="border: 1px solid gray; margin-bottom: 10px"> -->
+        <!-- </div> -->
+      </tbody>
       <% } %>
-    </ol>
+      <tfoot></tfoot>
+    </table>
   </div>
-  <% } %>
-
-</div>
 </div>

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bootstrap-icons": "^1.11.1",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",

@@ -2,21 +2,17 @@ GET http://localhost:3000/api/products/search?order=price
 
 ###
 
-GET http://localhost:8080/aluno
-
-###
-
-GET http://localhost:8080/aluno/425ff2ad-d097-46ee-b0ba-071c4abbd37f
+GET http://localhost:3000/api/sales/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZSI6eyJpZCI6MSwibmFtZSI6ImZ1bmNpb25hcmlvMSIsImVtYWlsIjoiZnVuYzFAZnVuYzEuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkYkFncDdDbDR3Mm5GU3FYblYzOWZkZTlPdU90S0lDVEluR0hGcGVXb1NwZnJHaUlEMFVnRk8iLCJpc19hZG1pbiI6MX0sImlhdCI6MTY5NjQ0Nzg1MywiZXhwIjoxNjk2NjIwNjUzfQ.su1h_nUKWw6OZDG0SSdjX8NSaBxU8bEBMWTtEcqW0IY
 
 ###
 
 POST http://localhost:3000/api/sales
 Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOnsiaWQiOjgsImVtYWlsIjoiY2xpZW50ZThAY2xpZW50ZTguY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkNUlHRFRGZmV0QXhvUzlBNXFZRXNhLjBhQ2RLcFNUUlNnWWNtZXVuV3QvMlF3VVNzcjFTQWEiLCJuYW1lIjoiY2xpbnRlOCJ9LCJpYXQiOjE2OTY0NDkxNDgsImV4cCI6MTY5NjYyMTk0OH0.G32TX_pYj0QN8h0rp-irIa2jMAwqDWBTaSrFcuAY1kg
 
 {
-    "client_id": 2,
-    "productIDs": [12,13]
-    
+ 	"productIDs": [1,2,4,5,6,4]
 }
 
 ###
@@ -28,19 +24,3 @@ Content-type: application/json
     "email":"lucio@lucio.com",
     "password": "lucio"   
 }
-
-###
-
-PUT http://localhost:8080/aluno?id=155a45f9-8e28-4240-977c-d6bc77baaf72
-Content-type: application/json
-
-{
-    "nom_aluno": "Lúcio Flávio Lemos",
-    "endereco_aluno":"Rua Alexandrino de Alencar 1592",
-    "RG": "1010297644/MD"
-   
-}
-
-### 
-
-DELETE http://localhost:8080/aluno?id=425ff2ad-d097-46ee-b0ba-071c4abbd37f
