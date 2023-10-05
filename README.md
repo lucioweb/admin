@@ -17,6 +17,15 @@ Tecnologias do módulo administrativo:
 * `VSCode` como editor de código;
 * `Ubuntu 22.04.2 LTS (GNU/Linux 5.15.90.1-microsoft-standard-WSL2 x86_64)` como SO.
 
+> [!NOTE]  
+> Highlights information that users should take into account, even when skimming.
+
+> [!IMPORTANT]  
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]  
+> Critical content demanding immediate user attention due to potential risks.
+
 O sistema administrativo conterá inicialmente as funcionalidades mais importantes, podendo ser escalado.
 # DESENVOLVIMENTO
 ### PARTE 1 - CRIAÇÃO E CONFIGURAÇÃO INICIAL DO PROJETO
