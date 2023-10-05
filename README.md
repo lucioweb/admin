@@ -22,10 +22,10 @@ Tecnologias do módulo administrativo:
 > Desde que apenas sigamos a ordem necessária na dedução de uma coisa a partir de outra, não haverá nada tão distante que não possamos alcançar nem tão obscura que não possamos enxergar.
 
 > [!IMPORTANT]  
-> Crucial information necessary for users to succeed.
+> Informações cruciais necessárias para o sucesso dos usuários.
 
 > [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
+> Conteúdo crítico que exige atenção imediata do usuário devido a riscos potenciais.
 
 O sistema administrativo conterá inicialmente as funcionalidades mais importantes, podendo ser escalado.
 # DESENVOLVIMENTO
