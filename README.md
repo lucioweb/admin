@@ -18,8 +18,7 @@ Tecnologias do módulo administrativo:
 * `Ubuntu 22.04.2 LTS (GNU/Linux 5.15.90.1-microsoft-standard-WSL2 x86_64)` como SO.
 
 > [!NOTE]  
-> Desde que apenas nos abstenhamos de aceitar como verdadeiro algo que não é.
-> Desde que apenas sigamos a ordem necessária na dedução de uma coisa a partir de outra, não haverá nada tão distante que não possamos alcançar nem tão obscura que não possamos enxergar.
+> Desde que apenas nos abstenhamos de aceitar como verdadeiro algo que não é e sigamos a ordem necessária na dedução de uma coisa a partir de outra, não haverá nada tão distante que não possamos alcançar nem tão obscura que não possamos enxergar.
 
 > [!IMPORTANT]  
 > Informações cruciais necessárias para o sucesso dos usuários.
@@ -117,7 +116,9 @@ Agora, quando quiser startar o servidor express, execute no terminal a seguinte 
 
     $ npm run dev 
     
-Prontinho. Toda vex que fizer alterações no seu código o nodemom se encarregará de restartar o servidor.
+> [!NOTE]
+> Prontinho. Toda vez que fizer alterações no seu código o nodemom se encarregará de restartar o servidor.
+> 
 ##### AJV - Biblioteca de validação de schema JSON:     
     $ npm install ajv --save
 ##### AJV-FORMATS - Biblioteca de validação de formato de dados do schema JSON:   
