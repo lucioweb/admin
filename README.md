@@ -1,7 +1,7 @@
 # INTRODUÇÃO 
-### Apresentação do sistema administrativo que será utilizado como base para a criação da loja virtual `PetTopStore`.
+### 1 - Apresentação do `Sistema Administrativo` que será utilizado como base para a criação da loja virtual `PetTopStore`.
 O projeto será modularizado, com plataformas e tecnologias diferentes para cada módulo da aplicação e que terá as seguintes funcionalidades:
-* [PAINEL DE ADMINISTRAÇÃO](https://materialpublic.imd.ufrn.br/curso/disciplina/3/77/9): onde o administrador do sistema poderá gerenciar produtos e visualizar relatórios de vendas. Também contempla uma API de acesso seguro aos dados para os outros módulos.
+* [PAINEL DE ADMINISTRAÇÃO](https://materialpublic.imd.ufrn.br/curso/disciplina/3/77/9): onde o administrador do sistema poderá gerenciar produtos e visualizar relatórios de vendas. Também contempla uma API de acesso seguro aos dados para os outros módulos. O sistema administrativo conterá inicialmente as funcionalidades mais importantes, podendo ser escalado.
 * PDV: ponto de venda (loja física), onde o vendedor poderá cadastrar clientes e realizar vendas.
 * LOJA VIRTUAL: um web site de vendas online onde os clientes poderão visualizar e adquirir os produtos da loja.
 
@@ -25,8 +25,42 @@ Tecnologias do módulo administrativo:
 
 > [!WARNING]  
 > Conteúdo crítico que exige atenção imediata do usuário devido a riscos potenciais.
+### 2 - Clonando o projeto siga as etapas:
+* Clone do repositório do projeto "admin" do GitHub com `$ git clone https://github.com/lucioweb/admin.git myapp`;
+* O diretório `myapp` será criado para acomodar o projeto;
+* Abra o projeto no seu editor de código predileto ou IDE (no Linus Ubuntu qualquer coisa como `$ cd */admin/myapp`); 
+* Abra o terminal `Ctrl+Shift+'` no VSCode.
+* Faça as instalações das bibliotecas necessárias ao projeto descritas no package.json com a CLI `$ npm install`;
+* Abra o arquivo de conexão `knexfile.js` na raiz do projeto:
 
-O sistema administrativo conterá inicialmente as funcionalidades mais importantes, podendo ser escalado.
+        module.exports = {
+        client: 'mysql2',
+
+        connection: {
+            host: '127.0.0.1',
+            port: 3306,
+            user: 'root',
+            password: 'root',
+            database: 'pettopstore'
+        },
+
+
+        migrations: {
+            directory: 'migrations', // Diretório que será criado na estrutura do projeto para acomodar os arquivos das migrations criadas.
+            tableName: 'knex_migrations' // Tabela que será criada no banco de dados pettopstore para acomodar as migrations criadas.
+        },
+        seeds: {
+            directory: 'seeds' // Diretório que será gerado para acomodar os arquivos das seeds criadas
+        }
+
+        };
+
+* Crie seu banco de dados (CREATE DATABASE meubanco;) e altere as chaves `user`, `password` e `database` do objeto *connection*. Os values para cada chave deverão ser os seus dados de conexão com o banco de dados que você criou.
+* Verifique em package.json que temos a biblioteca nodemon instalada e que temos um script com a chave "dev". Então rode o projeto com `$ npm run dev`.
+* Banco de de dados criado, arquivo de conexão reconfigurado, projeto rodando; vamos agora criar as tabelas do banco de dados (*migrations*), com alguns dados de exemplo (*seeds*). Porém não faremos isso pelo método tradicinal (`CREATE TABLE minhatabela`, `INSERT INTO minhatabela ...`, etc);
+* A pasta migrations guarda as definições das tabelas que serão criadas no banco de dados informado no arquivo de conexão `knexfile.js`.
+* Rode o comando `$ npx knex migrate:make create_employees` para criar a tabela de nome employees (funcionários). Se tiver curiosidade abra o arquivo `migrations/20230930130122_create_employees.js` e compare-o com a tabela `employees` criada, para ver como o Knex opera;
+* Verifique o arquivo `bin/www` e altere a porta de servço se for o caso. Lembre-se de alterar também o número das portas nas rotas para cada método HTTP (GET, POST, ...) da pasta http que verifica se a lógica dos roteamentos foram construídas corretamente.
 # DESENVOLVIMENTO
 ### PARTE 1 - CRIAÇÃO E CONFIGURAÇÃO INICIAL DO PROJETO
   
