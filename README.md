@@ -60,7 +60,7 @@ Tecnologias do módulo administrativo:
 * Banco de de dados criado, arquivo de conexão reconfigurado, projeto rodando; vamos agora criar as tabelas do banco de dados (*migrations*), com alguns dados de exemplo (*seeds*). Porém não faremos isso pelo método tradicinal (`CREATE TABLE minhatabela`, `INSERT INTO minhatabela ...`, etc);
 * A pasta migrations guarda as definições das tabelas que serão criadas no banco de dados informado no arquivo de conexão `knexfile.js`.
 * Rode o comando `$ npx knex migrate:make create_employees` para criar a tabela de nome employees (funcionários). Se tiver curiosidade abra o arquivo `migrations/20230930130122_create_employees.js` e compare-o com a tabela `employees` criada, para ver como o Knex opera;
-* Verifique o arquivo `bin/www` e altere a porta de servço se for o caso. Lembre-se de alterar também o número das portas nas rotas para cada método HTTP (GET, POST, ...) da pasta http que verifica se a lógica dos roteamentos foram construídas corretamente.
+* Verifique o arquivo `bin/www` e altere a porta de servço se for o caso. Lembre-se de alterar também o número das portas nas rotas para cada método HTTP (GET, POST, ...) da pasta http que verifica se a lógica dos roteamentos foi corretamente implementada.
 # DESENVOLVIMENTO
 ### PARTE 1 - CRIAÇÃO E CONFIGURAÇÃO INICIAL DO PROJETO
   
